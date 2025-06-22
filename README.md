@@ -48,3 +48,61 @@ Vyhledávání je case-insensitive (nerozlišuje velikost písmen).
 
 ### Kontakt(y) nalezen(y)
 Každý kontakt, který odpovídá hledanému kritériu, program vytiskne na jeden řádek ve formátu "JMENO, TELCISLO", kde JMENO je jméno kontaktu z telefonního seznamu a TELCISLO je záznam o telefonním čísle. Program tiskne všechny kontakty, které kritériu odpovídají. Na pořadí řádků nezáleží. Stejně tak nezáleží ani na velikosti písmen.
+
+## Omezení v projektu a tipy
+Je zakázané použít následující funkce:
+
+* volání z rodiny malloc a free - práce s dynamickou pamětí není v tomto projektu zapotřebí,
+* volání z rodiny fopen, fclose, fseek, fscanf, ... - práce s externími soubory (např. dočasnými) není v tomto projektu žádoucí; volání nad stdin, stdout a stderr jsou v pořádku.
+* volání qsort, lsearch, bsearch a hsearch - cílem je zamyslet se nad algoritmizací a strukturou dat.
+
+## Příklady vstupů a výstupů
+Pomocný soubor seznam.txt telefonního seznamu:
+
+```
+$ cat seznam.txt
+Petr Dvorak
+603123456
+Jana Novotna
+777987654
+Bedrich Smetana ml.
+541141120
+```
+
+Příklad hledání (pro demonstraci jsou nalezená písmena ve jméně jako velká):
+
+```
+$ ./tnine <seznam.txt
+petr dvorak, 603123456
+jana novotna, 777987654
+bedrich smetana ml., 541141120
+```
+
+```
+$ ./tnine 12 <seznam.txt
+petr dvorak, 603123456
+bedrich smetana ml., 541141120
+```
+
+```
+$ ./tnine 686 <seznam.txt
+jana nOVOtna, 777987654
+```
+
+```
+$ ./tnine 38 <seznam.txt
+pETr DVorak, 603123456
+bedrich smETana ml., 541141120
+```
+
+```
+$ ./tnine 111 <seznam.txt
+Not found
+```
+
+Příklad vstupu z výstupu jiného programu (tedy ani z klávesnice ani ze souboru):
+
+```
+$ printf "Petr Dvorak\n603123456\n" | ./tnine 38
+pETr DVorak, 603123456
+```
